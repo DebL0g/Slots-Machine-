@@ -26,14 +26,14 @@ const SYMBOLS = {
 const createpool = () => {
     const pool = [];
     for (const [symbolName, data] of Object.entries(SYMBOLS)) {
-    
+
         for (let i = 0; i < data.weight; i++) {
             pool.push(symbolName);
         }
-       
+
     }
-     return pool;
-    
+    return pool;
+
 };
 
 
@@ -44,29 +44,29 @@ const randomgene = (pool) => {
 }
 
 
-const spin = () =>{ 
-    const symbolpool = createpool(); 
+const spin = () => {
+    const symbolpool = createpool();
     const reels = [];
-    for(let col = 0; col<COLS ; col++){ 
-        reels[col]= [];
-       
-       for(let row=0; row<ROW ; row++){
-        const symbol = randomgene(symbolpool);
-        reels[col][row]=symbol;
-       }
+    for (let col = 0; col < COLS; col++) {
+        reels[col] = [];
+
+        for (let row = 0; row < ROW; row++) {
+            const symbol = randomgene(symbolpool);
+            reels[col][row] = symbol;
+        }
     }
     return reels;
 }
 
 
-const display = (reels) => { 
-    for(let row = 0; row < reels[0].length; row++){
-        let rowdisplay=''; 
-       
-        for( let cols = 0 ; cols <reels.length ; cols++){ 
-            const sysmbolName= reels[cols][row]; 
-            const emoji = SYMBOLS[sysmbolName].emoji; 
-            rowdisplay += emoji + ''; 
+const display = (reels) => {
+    for (let row = 0; row < reels[0].length; row++) {
+        let rowdisplay = '';
+
+        for (let cols = 0; cols < reels.length; cols++) {
+            const sysmbolName = reels[cols][row];
+            const emoji = SYMBOLS[sysmbolName].emoji;
+            rowdisplay += emoji + '';
 
         }
         console.log(rowdisplay);
@@ -123,7 +123,7 @@ const getbet = (balance, lines) => {
 let balance = deposit();
 const numoflines = getlines();
 const numbet = getbet(balance, numoflines);
-const reels= spin();
+const reels = spin();
 display(reels);
 
 
