@@ -11,33 +11,66 @@ const prompt = require("prompt-sync")();
 
 //global vars
 const ROW = 3;
-const COLS = 3; 
+const COLS = 3;
 
-const SYMBOLS ={
-     cherry: { value: 2, weight: 35, emoji: '🍒' },
-  lemon: { value: 3, weight: 30, emoji: '🍋' },
-  orange: { value: 5, weight: 20, emoji: '🍊' },
-  plum: { value: 8, weight: 10, emoji: '🍇' },
-  seven: { value: 20, weight: 4, emoji: '7️⃣' },
-  diamond: { value: 50, weight: 1, emoji: '💎' }
+const SYMBOLS = {
+    cherry: { value: 2, weight: 35, emoji: '🍒' },
+    lemon: { value: 3, weight: 30, emoji: '🍋' },
+    orange: { value: 5, weight: 20, emoji: '🍊' },
+    plum: { value: 8, weight: 10, emoji: '🍇' },
+    seven: { value: 20, weight: 4, emoji: '7️⃣' },
+    diamond: { value: 50, weight: 1, emoji: '💎' }
 };
 
 
-const createpool = () =>{
-    const pool=[]; 
-    for(const[symbolName,data] of Object.entries(SYMBOLS)); 
-    {
-        for(let i = 0 ;i <data.weight; i++){
+const createpool = () => {
+    const pool = [];
+    for (const [symbolName, data] of Object.entries(SYMBOLS)) {
+    
+        for (let i = 0; i < data.weight; i++) {
             pool.push(symbolName);
         }
+       
     }
-    return pool;
+     return pool;
+    
 };
 
-const randomgene = (pool) =>{
-    const randomindex = Math.floor(Math.random()*pool.lenght);
-    return pool(randomindex);
-    
+
+const randomgene = (pool) => {
+    const randomindex = Math.floor(Math.random() * pool.length);
+    return pool[randomindex];
+
+}
+
+
+const spin = () =>{ 
+    const symbolpool = createpool(); 
+    const reels = [];
+    for(let col = 0; col<COLS ; col++){ 
+        reels[col]= [];
+       
+       for(let row=0; row<ROW ; row++){
+        const symbol = randomgene(symbolpool);
+        reels[col][row]=symbol;
+       }
+    }
+    return reels;
+}
+
+
+const display = (reels) => { 
+    for(let row = 0; row < reels[0].length; row++){
+        let rowdisplay=''; 
+       
+        for( let cols = 0 ; cols <reels.length ; cols++){ 
+            const sysmbolName= reels[cols][row]; 
+            const emoji = SYMBOLS[sysmbolName].emoji; 
+            rowdisplay += emoji + ''; 
+
+        }
+        console.log(rowdisplay);
+    }
 }
 
 
@@ -71,11 +104,11 @@ const getlines = () => {
     }
 };
 
-const getbet = (balance,lines) => {
+const getbet = (balance, lines) => {
     while (true) {
         const bet = prompt("Enter the bet per line: ");
         const numbet = parseFloat(bet);
-        if (isNaN(numbet) || numbet <= 0 || numbet > balance/lines) {
+        if (isNaN(numbet) || numbet <= 0 || numbet > balance / lines) {
             console.log("Invalid Value , try again ! ");
 
         } else {
@@ -89,7 +122,9 @@ const getbet = (balance,lines) => {
 
 let balance = deposit();
 const numoflines = getlines();
-const numbet = getbet(balance,numoflines);
+const numbet = getbet(balance, numoflines);
+const reels= spin();
+display(reels);
 
 
 
