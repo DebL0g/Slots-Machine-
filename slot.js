@@ -9,6 +9,37 @@
 
 const prompt = require("prompt-sync")();
 
+//global vars
+const ROW = 3;
+const COLS = 3; 
+
+const SYMBOLS ={
+     cherry: { value: 2, weight: 35, emoji: '🍒' },
+  lemon: { value: 3, weight: 30, emoji: '🍋' },
+  orange: { value: 5, weight: 20, emoji: '🍊' },
+  plum: { value: 8, weight: 10, emoji: '🍇' },
+  seven: { value: 20, weight: 4, emoji: '7️⃣' },
+  diamond: { value: 50, weight: 1, emoji: '💎' }
+};
+
+
+const createpool = () =>{
+    const pool=[]; 
+    for(const[symbolName,data] of Object.entries(SYMBOLS)); 
+    {
+        for(let i = 0 ;i <data.weight; i++){
+            pool.push(symbolName);
+        }
+    }
+    return pool;
+};
+
+const randomgene = (pool) =>{
+    const randomindex = Math.floor(Math.random()*pool.lenght);
+    return pool(randomindex);
+    
+}
+
 
 
 
