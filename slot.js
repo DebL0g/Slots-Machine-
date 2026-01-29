@@ -149,36 +149,52 @@ const checkwin = (reels, lines, bet) => {
 
 const game = () => {
     let balance = deposit();
+    
     while (true) {
-        console.log("Your Balance:$" + balance);
-
+        console.log("\n==========================================");
+        console.log("         🎰 SLOT MACHINE 🎰");
+        console.log("==========================================");
+        console.log("Your Balance: $" + balance);
+        console.log("==========================================\n");
 
         const numoflines = getlines();
         const numbet = getbet(balance, numoflines);
+        
+        console.log(`\nTotal Bet: $${numbet * numoflines}`);
+        console.log("Spinning...\n");
+        
         balance -= numbet * numoflines;
+        
         const reels = spin();
         display(reels);
 
-        const winnings = checkwin(reels, numoflines,numbet);
-        balance += winnings
+        console.log(""); 
+        
+        const winnings = checkwin(reels, numoflines, numbet);
+        balance += winnings;
 
         if (winnings > 0) {
-            console.log("You won: $", + winnings);
+            console.log("🎉 You won: $" + winnings + " 🎉");
         } else {
-            console.log("No win this time.");
+            console.log("❌ No win this time.");
         }
+        
+        console.log("\n==========================================");
+        console.log("New Balance: $" + balance);
+        console.log("==========================================\n");
+        
         if (balance <= 0) {
-            console.log("Game over ! You broke gngy");
+            console.log("💸 Game over! You're broke! 💸\n");
             break;
         }
 
         const playagain = prompt("Play Again? (y/n): ");
         if (playagain.toLowerCase() !== 'y') {
-            console.log("Your a Quiter , Final Balance:$",+ balance);
+            console.log("\n👋 Thanks for playing!");
+            console.log("Final Balance: $" + balance + "\n");
             break;
         }
     }
-
 };
 
 game()
