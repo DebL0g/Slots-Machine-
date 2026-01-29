@@ -122,6 +122,30 @@ const display = (reels) => {
     }
 
 
+    const checkwin = (reels, lines,bet) => {
+        let winnings = 0 ;
+        for(let row = 0; row<lines ; row++){
+            const firstsym=reels[0][row];
+            let allsame= true;
+            for(let col=1; col<COLS;col++){
+                if(reels[col][row!==firstsym]){
+                    allsame=false;
+                    break;
+                }
+            }
+        }
+        if(allsame){
+            const symbolval= SYMBOLS[firstsym].value;
+            const winamount = symbolval*bet;
+            winnings += winamount;
+
+            
+        }
+        return winnings;
+
+    };
+
+
 
 
     let balance = deposit();
