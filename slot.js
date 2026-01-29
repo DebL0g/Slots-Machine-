@@ -71,88 +71,120 @@ const display = (reels) => {
                 rowdisplay += '|';
 
             }
-           
+
         }
-         console.log(rowdisplay);
+        console.log(rowdisplay);
     }
 
 };
 
 
-    const deposit = () => {
-        while (true) {
-            const depositamount = prompt("Enter a deposit amount: ");
-            const numberdeposit = parseFloat(depositamount);
-            if (isNaN(numberdeposit) || numberdeposit <= 0) {
-                console.log("Invalid number , try again ");
-            } else {
+const deposit = () => {
+    while (true) {
+        const depositamount = prompt("Enter a deposit amount: ");
+        const numberdeposit = parseFloat(depositamount);
+        if (isNaN(numberdeposit) || numberdeposit <= 0) {
+            console.log("Invalid number , try again ");
+        } else {
 
 
-                return numberdeposit;
-
-            }
-        }
-
-    };
-    const getlines = () => {
-        while (true) {
-            const lines = prompt("Enter the numbers of lines to bet on (1-3): ");
-            const numoflines = parseFloat(lines);
-            if (isNaN(numoflines) || numoflines <= 0 || numoflines > 3) {
-                console.log("Invalid value , try again !");
-
-            } else {
-                return numoflines;
-            }
-        }
-    };
-
-    const getbet = (balance, lines) => {
-        while (true) {
-            const bet = prompt("Enter the bet per line: ");
-            const numbet = parseFloat(bet);
-            if (isNaN(numbet) || numbet <= 0 || numbet > balance / lines) {
-                console.log("Invalid Value , try again ! ");
-
-            } else {
-                return numbet;
-            }
+            return numberdeposit;
 
         }
     }
 
+};
+const getlines = () => {
+    while (true) {
+        const lines = prompt("Enter the numbers of lines to bet on (1-3): ");
+        const numoflines = parseFloat(lines);
+        if (isNaN(numoflines) || numoflines <= 0 || numoflines > 3) {
+            console.log("Invalid value , try again !");
 
-    const checkwin = (reels, lines,bet) => {
-        let winnings = 0 ;
-        for(let row = 0; row<lines ; row++){
-            const firstsym=reels[0][row];
-            let allsame= true;
-            for(let col=1; col<COLS;col++){
-                if(reels[col][row!==firstsym]){
-                    allsame=false;
-                    break;
-                }
+        } else {
+            return numoflines;
+        }
+    }
+};
+
+const getbet = (balance, lines) => {
+    while (true) {
+        const bet = prompt("Enter the bet per line: ");
+        const numbet = parseFloat(bet);
+        if (isNaN(numbet) || numbet <= 0 || numbet > balance / lines) {
+            console.log("Invalid Value , try again ! ");
+
+        } else {
+            return numbet;
+        }
+
+    }
+}
+
+
+const checkwin = (reels, lines, bet) => {
+    let winnings = 0;
+    for (let row = 0; row < lines; row++) {
+        const firstsym = reels[0][row];
+        let allsame = true;
+        for (let col = 1; col < COLS; col++) {
+            if (reels[col][row] !== firstsym) {
+                allsame = false;
+                break;
             }
         }
-        if(allsame){
-            const symbolval= SYMBOLS[firstsym].value;
-            const winamount = symbolval*bet;
+        if (allsame) {
+            const symbolval = SYMBOLS[firstsym].value;
+            const winamount = symbolval * bet;
             winnings += winamount;
 
-            
+
         }
-        return winnings;
+    }
 
-    };
+    return winnings;
+
+};
 
 
-
-
+const game = () => {
     let balance = deposit();
-    const numoflines = getlines();
-    const numbet = getbet(balance, numoflines);
-    const reels = spin();
-    display(reels);
+    while (true) {
+        console.log("Your Balance:$" + balance);
+
+
+        const numoflines = getlines();
+        const numbet = getbet(balance, numoflines);
+        balance -= numbet * numoflines;
+        const reels = spin();
+        display(reels);
+
+        const winnings = checkwin(reels, numoflines,numbet);
+        balance += winnings
+
+        if (winnings > 0) {
+            console.log("You won: $", + winnings);
+        } else {
+            console.log("No win this time.");
+        }
+        if (balance <= 0) {
+            console.log("Game over ! You broke gngy");
+            break;
+        }
+
+        const playagain = prompt("Play Again? (y/n): ");
+        if (playagain.toLowerCase() !== 'y') {
+            console.log("Your a Quiter , Final Balance:$",+ balance);
+            break;
+        }
+    }
+
+};
+
+game()
+
+
+
 
 
 
