@@ -149,7 +149,7 @@ const checkwin = (reels, lines, bet) => {
 
 const game = () => {
     let balance = deposit();
-    
+
     while (true) {
         console.log("\n==========================================");
         console.log("         🎰 SLOT MACHINE 🎰");
@@ -159,17 +159,17 @@ const game = () => {
 
         const numoflines = getlines();
         const numbet = getbet(balance, numoflines);
-        
+
         console.log(`\nTotal Bet: $${numbet * numoflines}`);
         console.log("Spinning...\n");
-        
+
         balance -= numbet * numoflines;
-        
+
         const reels = spin();
         display(reels);
 
-        console.log(""); 
-        
+        console.log("");
+
         const winnings = checkwin(reels, numoflines, numbet);
         balance += winnings;
 
@@ -178,11 +178,11 @@ const game = () => {
         } else {
             console.log("❌ No win this time.");
         }
-        
+
         console.log("\n==========================================");
         console.log("New Balance: $" + balance);
         console.log("==========================================\n");
-        
+
         if (balance <= 0) {
             console.log("💸 Game over! You're broke! 💸\n");
             break;
